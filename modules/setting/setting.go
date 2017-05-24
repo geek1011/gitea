@@ -163,6 +163,7 @@ var (
 		PreferredLicenses      []string
 		DisableHTTPGit         bool
 		UseCompatSSHURI        bool
+		AlwaysRenderRawFiles   bool
 
 		// Repository editor settings
 		Editor struct {
@@ -192,6 +193,7 @@ var (
 		PreferredLicenses:      []string{"Apache License 2.0,MIT License"},
 		DisableHTTPGit:         false,
 		UseCompatSSHURI:        false,
+		AlwaysRenderRawFiles:   false,
 
 		// Repository editor settings
 		Editor: struct {
@@ -934,6 +936,8 @@ func NewContext() {
 	if !filepath.IsAbs(Repository.Upload.TempPath) {
 		Repository.Upload.TempPath = path.Join(workDir, Repository.Upload.TempPath)
 	}
+
+	Repository.AlwaysRenderRawFiles = sec.Key("ALWAYS_RENDER_RAW_FILES").MustBool()
 
 	sec = Cfg.Section("picture")
 	AvatarUploadPath = sec.Key("AVATAR_UPLOAD_PATH").MustString(path.Join(AppDataPath, "avatars"))
